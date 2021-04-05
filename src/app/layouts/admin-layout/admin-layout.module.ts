@@ -23,13 +23,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 
-import { EmployeeService } from "../../services/employee.service";
-import { GridComponent } from 'app/employee-management/grid/grid.component';
-import { AddDialogComponent } from 'app/employee-management/dialog/add/add-dialog.component';
-import { AlertComponent } from 'app/employee-management/dialog/alert/alert.component';
-import { EditDialogComponent } from 'app/employee-management/dialog/edit/edit-dialog.component';
-import { RemoveDialogComponent } from 'app/employee-management/dialog/remove/remove-dialog.component';
-
 @NgModule({
     imports: [
         CommonModule,
@@ -58,14 +51,9 @@ import { RemoveDialogComponent } from 'app/employee-management/dialog/remove/rem
         MapsComponent,
         NotificationsComponent,
         UpgradeComponent,
-        GridComponent,
-        AddDialogComponent,
-        AlertComponent,
-        EditDialogComponent,
-        RemoveDialogComponent
     ],
-    providers: [EmployeeService],
-    bootstrap: [GridComponent]
+    providers: [],
+    bootstrap: []
 })
 
 export class AdminLayoutModule { }

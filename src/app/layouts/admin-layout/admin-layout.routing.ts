@@ -8,7 +8,6 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import { GridComponent } from '../../employee-management/grid/grid.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -61,5 +60,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',                 component: MapsComponent },
     { path: 'notifications',        component: NotificationsComponent },
     { path: 'upgrade',              component: UpgradeComponent },
-    { path: 'employee-management',  component: GridComponent },
+    { path: 'employee-management',  loadChildren: () => import('../../employee-management/employee-management.module').then(m => m.EmployeeManagementModule) },
 ];
