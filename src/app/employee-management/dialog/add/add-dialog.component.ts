@@ -22,7 +22,7 @@ export class AddDialogComponent {
             'name': new FormControl(this.data.name, [Validators.required, isValidName]),
             'code': new FormControl(this.data.code, [Validators.required, isValidCode]),
             'email': new FormControl(this.data.code, [Validators.required, isValidEmail]),
-            'date': new FormControl(this.data.birth, [Validators.required, isValidDate]),
+            'date': new FormControl(this.data.dob, [Validators.required, isValidDate]),
         });
     }
 
@@ -38,13 +38,15 @@ export class AddDialogComponent {
             return;
         }
         if (this.formGroup.status !== "INVALID") {
-            let result = this.dataService.create(this.data);
-            this.dialog.open(AlertComponent, {
-                data: { message: "Thêm mới " + (result ? "thành công" : "không thành công") }
+            // let result = this.dataService.create(this.data);
+            this.dataService.createApi(this.data).subscribe(employee => {
+                this.dialog.open(AlertComponent, {
+                    data: { message: "Thêm mới " + (employee ? "thành công" : "không thành công") }
+                });
+                if (employee) {
+                    this.dialogRef.close(employee);
+                }
             });
-            if (result) {
-                this.dialogRef.close();
-            }
         } else {
             this.dialog.open(AlertComponent, {
                 data: { message: "Dữ liệu không hợp lệ !" }

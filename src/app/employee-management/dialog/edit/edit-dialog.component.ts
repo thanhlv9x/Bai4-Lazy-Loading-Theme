@@ -24,7 +24,7 @@ export class EditDialogComponent {
             'name': new FormControl(this.data.name, [Validators.required, isValidName]),
             'code': new FormControl(this.data.code, [Validators.required, isValidCode]),
             'email': new FormControl(this.data.code, [Validators.required, isValidEmail]),
-            'date': new FormControl(this.data.birth, [Validators.required, isValidDate]),
+            'date': new FormControl(this.data.dob, [Validators.required, isValidDate]),
         });
     }
 
@@ -42,13 +42,15 @@ export class EditDialogComponent {
         if (this.formGroup.status !== "INVALID") {
             let imgTag: any = document.getElementById('imageUpload');
             this.data.image = imgTag.src;
-            var result = this.dataService.update(this.data);
-            this.dialog.open(AlertComponent, {
-                data: { message: "Cập nhật " + (result ? "thành công" : "không thành công") }
+            // var result = this.dataService.update(this.data);
+            this.dataService.updateApi(this.data).subscribe(employee => {
+                this.dialog.open(AlertComponent, {
+                    data: { message: "Cập nhật " + (employee ? "thành công" : "không thành công") }
+                });
+                if (employee) {
+                    this.dialogRef.close(employee);
+                }
             });
-            if (result) {
-                this.dialogRef.close();
-            }
         } else {
             this.dialog.open(AlertComponent, {
                 data: { message: "Dữ liệu không hợp lệ !" }

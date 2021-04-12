@@ -3,7 +3,7 @@ export class Employee {
     name: string | undefined;
     code: string | undefined;
     address: string | undefined;
-    birth: Date | undefined;
+    dob: Date | undefined;
     email: string | undefined;
     image: string | undefined;
 }
@@ -13,7 +13,7 @@ export const Keys: string[] = [
     'name',
     'code',
     'address',
-    'birth',
+    'dob',
     'email',
     'image',
 ]

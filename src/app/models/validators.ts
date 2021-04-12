@@ -3,7 +3,11 @@ import { FormControl } from "@angular/forms";
 
 export const isValidDate = (c: FormControl) => {
     const REGEX = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
-    return !REGEX.test(c.value?.toLocaleDateString()) || c.value === '' ? {
+    let dt = '';
+    try {
+        dt = new Date(c.value).toLocaleDateString();
+    } catch (error) {}
+    return !REGEX.test(dt) || c.value === '' ? {
         isValidDate: true
     } : null;
 }

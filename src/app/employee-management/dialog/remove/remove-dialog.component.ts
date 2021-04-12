@@ -11,7 +11,7 @@ import { AlertComponent } from '../alert/alert.component';
   styleUrls: ['./remove-dialog.component.css']
 })
 export class RemoveDialogComponent {
-    date = new FormControl(this.data.birth);
+    date = new FormControl(this.data.dob);
     constructor(public dialogRef: MatDialogRef<RemoveDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: Employee,
         public dataService: EmployeeService, public dialog: MatDialog) { }
@@ -21,12 +21,14 @@ export class RemoveDialogComponent {
     }
 
     onConfirm(): void {
-        var result = this.dataService.delete(this.data.id ?? -1);
-        this.dialog.open(AlertComponent, {
-            data: { message: "Xóa " + (result ? "thành công" : "không thành công") }
+        // var result = this.dataService.delete(this.data.id ?? -1);
+        this.dataService.deleteApi(this.data.id ?? -1).subscribe(result => {
+            this.dialog.open(AlertComponent, {
+                data: { message: "Xóa " + (result ? "thành công" : "không thành công") }
+            });
+            if (result) {
+                this.dialogRef.close(this.data.id);
+            }
         });
-        if (result) {
-            this.dialogRef.close();
-        }
     }
 }

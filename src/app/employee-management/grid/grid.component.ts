@@ -15,6 +15,7 @@ import { MatRowDef } from '@angular/material/table';
     styleUrls: ['./grid.component.css'],
 })
 export class GridComponent {
+    private _data: Employee[];
     private _dataSource: any;
     public get dataSource(): any {
         return this._dataSource;
@@ -38,7 +39,16 @@ export class GridComponent {
         this._displayedColumns = service.getKeys();
         if (!this._displayedColumns.includes("actions"))
             this._displayedColumns.push("actions");
-        this._dataSource = new MatTableDataSource(service.read());
+        // this._dataSource = new MatTableDataSource(service.read());
+        this.getAll();
+    }
+
+    getAll() {
+        this._service.readApi().subscribe((res: Employee[]) => {
+            this._data = res;
+            console.log(this._data);
+            this._dataSource = new MatTableDataSource(this._data);
+        })
     }
 
     onAdd(): void {
@@ -50,7 +60,9 @@ export class GridComponent {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            this.dataSource = new MatTableDataSource(this._service.read());
+            // this.dataSource = new MatTableDataSource(this._service.read());
+            this._data.push(result);
+            this.dataSource = new MatTableDataSource(this._data);
         });
     }
 
@@ -64,7 +76,12 @@ export class GridComponent {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            this.dataSource = new MatTableDataSource(this._service.read());
+            // this.dataSource = new MatTableDataSource(this._service.read());
+            var index = this._data.findIndex((item) => item.id === result.id);
+            if (index !== -1) {
+                this._data[index] = result;
+                this.dataSource = new MatTableDataSource(this._data);
+            }
         });
     }
     onRemove(data: Employee) {
@@ -74,7 +91,10 @@ export class GridComponent {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            this.dataSource = new MatTableDataSource(this._service.read());
+            // this.dataSource = new MatTableDataSource(this._service.read());
+            var index = this._data.findIndex((item) => item.id === result);
+            if (index !== -1) this._data.splice(index, 1);
+            this.dataSource = new MatTableDataSource(this._data);
         });
     }
 }

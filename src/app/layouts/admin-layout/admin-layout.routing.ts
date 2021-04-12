@@ -60,5 +60,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',                 component: MapsComponent },
     { path: 'notifications',        component: NotificationsComponent },
     { path: 'upgrade',              component: UpgradeComponent },
-    { path: 'employee-management',  loadChildren: () => import('../../employee-management/employee-management.module').then(m => m.EmployeeManagementModule) },
+    { path: 'employee-management',  loadChildren: '../../employee-management/employee-management.module#EmployeeManagementModule' },
+    // { path: 'employee-management',  loadChildren: () => import('../../employee-management/employee-management.module').then(m => m.EmployeeManagementModule) },
 ];
